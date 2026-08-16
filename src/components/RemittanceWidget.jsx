@@ -1,31 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RefreshCw, ArrowRight, ChevronsUpDown, Banknote, Smartphone, Wifi, Check } from 'lucide-react';
 
 import cubaFlag from '../assets/cuba.svg';
 import usaFlag from '../assets/usa.svg';
 import uaeFlag from '../assets/uae.svg';
+import russiaFlag from '../assets/russia.svg';
 
-const RemittanceWidget = () => {
+import { getExchangeRate, getSourceCurrencyInfo, EXCHANGE_RATES } from '../config/exchangeRates';
+
+const RemittanceWidget = ({ sourceCurrency = 'AED' }) => {
     const [sendAmount, setSendAmount] = useState(100);
-    const [exchangeRate, setExchangeRate] = useState(130.929);
-
-    const currencyOptions = [
-        { id: 'cup', code: 'CUP', label: 'CUP', flag: cubaFlag },
-        { id: 'cup_cash', code: 'CUP', label: 'CUP (Efectivo)', flag: cubaFlag },
-        { id: 'usd_cash', code: 'USD', label: 'USD (Efectivo)', flag: usaFlag },
-        { id: 'usd_classic', code: 'USD', label: 'USD (Tarjetas Clásicas)', flag: usaFlag },
-        { id: 'usd_prepaid', code: 'USD', label: 'USD (Tarjetas Prepago)', flag: usaFlag },
-    ];
-
-    const [selectedCurrency, setSelectedCurrency] = useState(currencyOptions[0]);
+    const [exchangeRate, setExchangeRate] = useState(getExchangeRate(sourceCurrency));
     const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
-    const [serviceType, setServiceType] = useState('remesas'); // 'remesas' | 'recargas' | 'internet'
+
+    // Actualizar tasa cuando cambie la moneda
+    useEffect(() => {
+        const rate = getExchangeRate(sourceCurrency);
+        setExchangeRate(rate);
+    }, [sourceCurrency]);
+
+    // Opciones de moneda disponibles según la moneda origen
+    const getCurrencyOptions = () => {
+        if (sourceCurrency === 'RUB') {
+            return [
+                { id: 'cup', code: 'CUP', label: 'CUP', flag: cubaFlag },
+                { id: 'usd', code: 'USD', label: 'USD', flag: usaFlag },
+            ];
+        }
+        // AED (actual) - opciones extendidas
+        return [
+            { id: 'cup', code: 'CUP', label: 'CUP', flag: cubaFlag },
+            { id: 'cup_cash', code: 'CUP', label: 'CUP (Efectivo)', flag: cubaFlag },
+            { id: 'usd_cash', code: 'USD', label: 'USD (Efectivo)', flag: usaFlag },
+            { id: 'usd_classic', code: 'USD', label: 'USD (Tarjetas Clásicas)', flag: usaFlag },
+            { id: 'usd_prepaid', code: 'USD', label: 'USD (Tarjetas Prepago)', flag: usaFlag },
+        ];
+    };
+
+    const currencyOptions = getCurrencyOptions();
+    const [selectedCurrency, setSelectedCurrency] = useState(currencyOptions[0]);
 
     const handleSendChange = (e) => {
         setSendAmount(e.target.value);
     };
 
     const receiveAmount = (sendAmount * exchangeRate).toFixed(2);
+
+    const currencySymbols = {
+        AED: 'د.إ',
+        RUB: '₽'
+    };
+    const symbol = currencySymbols[sourceCurrency] || '';
 
     return (
         <div className="w-full max-w-lg mx-auto space-y-6">
@@ -44,40 +69,15 @@ const RemittanceWidget = () => {
             {/* Money Transfer Block */}
             <div className="bg-secondary rounded-3xl shadow-xl border border-border p-6 md:p-8 transition-colors duration-300">
 
-                {/* Service Type Selector */}
+                {/* Service Type Selector - Solo Remesas para ahora */}
                 <div className="flex justify-center mb-8">
-                    <div className="bg-background border border-border rounded-xl p-1 flex items-center gap-1 w-full max-w-sm">
-                        <button
-                            onClick={() => setServiceType('remesas')}
-                            className={`flex-1 flex items-center justify-center gap-1 md:gap-2 py-2 px-1 md:px-3 rounded-lg text-xs md:text-sm font-bold transition-all ${serviceType === 'remesas'
-                                    ? 'bg-secondary shadow-sm text-text-main'
-                                    : 'text-text-main/60 hover:text-text-main'
-                                }`}
-                        >
-                            <Banknote className="w-4 h-4" />
-                            Remesas
-                        </button>
-                        <button
-                            onClick={() => setServiceType('recargas')}
-                            className={`flex-1 flex items-center justify-center gap-1 md:gap-2 py-2 px-1 md:px-3 rounded-lg text-xs md:text-sm font-bold transition-all ${serviceType === 'recargas'
-                                    ? 'bg-secondary shadow-sm text-text-main'
-                                    : 'text-text-main/60 hover:text-text-main'
-                                }`}
-                        >
-                            <Smartphone className="w-4 h-4" />
-                            Recargas
-                        </button>
-                        <button
-                            onClick={() => setServiceType('internet')}
-                            className={`flex-1 flex items-center justify-center gap-1 md:gap-2 py-2 px-1 md:px-3 rounded-lg text-xs md:text-sm font-bold transition-all ${serviceType === 'internet'
-                                    ? 'bg-secondary shadow-sm text-text-main'
-                                    : 'text-text-main/60 hover:text-text-main'
-                                }`}
-                        >
-                            <Wifi className="w-4 h-4" />
-                            Internet
-                        </button>
-                    </div>
+                    <button
+                        className="flex items-center gap-3 bg-background border border-border rounded-xl p-3 w-full max-w-sm"
+                        disabled
+                    >
+                        <Banknote className="w-5 h-5 text-primary" />
+                        <span className="font-bold text-primary text-sm">Remesas</span>
+                    </button>
                 </div>
 
                 <div className="space-y-4">
@@ -92,9 +92,9 @@ const RemittanceWidget = () => {
                                 className="w-full bg-background border border-border rounded-xl px-4 py-4 text-2xl font-bold text-text-main focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                                 placeholder="0.00"
                             />
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-secondary px-2 py-1 rounded-lg border border-border shadow-sm">
-                                <img src={uaeFlag} alt="AED" className="w-6 h-auto rounded-[2px]" />
-                                <span className="font-bold text-text-main/80">AED</span>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-secondary px-3 py-1 rounded-lg border border-border shadow-sm">
+                                <img src={sourceCurrency === 'RUB' ? russiaFlag : uaeFlag} alt={sourceCurrency} className="w-5 h-auto rounded-[2px]" />
+                                <span className="font-bold text-text-main/80">{symbol} {sourceCurrency}</span>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ const RemittanceWidget = () => {
                                     onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
                                     className="flex items-center gap-2 bg-secondary font-bold text-text-main py-1.5 pl-2 pr-2 rounded-lg border border-border shadow-sm hover:brightness-95 transition-all"
                                 >
-                                    <img src={selectedCurrency.flag} alt={selectedCurrency.code} className="w-6 h-auto rounded-[2px]" />
+                                    <img src={selectedCurrency.flag} alt={selectedCurrency.code} className="w-5 h-auto rounded-[2px]" />
                                     <span>{selectedCurrency.code}</span>
                                     <ChevronsUpDown className="w-4 h-4 text-text-main/50" />
                                 </button>
@@ -160,15 +160,20 @@ const RemittanceWidget = () => {
                 {/* Rate Bar */}
                 <div className="mt-6 bg-primary/10 rounded-xl p-3 flex items-center justify-between text-primary">
                     <span className="text-sm font-medium">
-                        Tasa actualizada: 1 AED = {exchangeRate} {selectedCurrency.code}
+                        Tasa actualizada: 1 {sourceCurrency} = {exchangeRate} {selectedCurrency.code}
                     </span>
-                    <button onClick={() => setExchangeRate(130.93 + Math.random())} className="p-1.5 hover:bg-primary/20 rounded-full transition-colors">
+                    <button 
+                        onClick={() => setExchangeRate(getExchangeRate(sourceCurrency) * (0.95 + Math.random() * 0.1))} 
+                        className="p-1.5 hover:bg-primary/20 rounded-full transition-colors"
+                    >
                         <RefreshCw className="w-4 h-4" />
                     </button>
                 </div>
 
                 {/* Primary Button */}
-                <button className="w-full mt-8 bg-primary hover:opacity-90 text-white text-lg font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                <button 
+                    className="w-full mt-8 bg-primary hover:opacity-90 text-white text-lg font-bold py-4 rounded-xl shadow-lg shadow-primary/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2"
+                >
                     Enviar remesa
                     <ArrowRight className="w-5 h-5" />
                 </button>

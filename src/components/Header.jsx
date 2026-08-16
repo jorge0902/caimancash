@@ -22,22 +22,22 @@ const Header = () => {
 
     return (
         <>
-            <header className="fixed top-0 left-0 right-0 bg-secondary/95 backdrop-blur-md shadow-sm border-b border-border z-40 h-28 md:h-36 flex items-center justify-between px-4 md:px-8 transition-colors duration-300">
-                <Link to="/" className="flex items-center gap-3">
+            <header className="fixed top-0 left-0 right-0 bg-secondary/95 backdrop-blur-md shadow-sm border-b border-border z-40 h-16 md:h-20 flex items-center justify-between px-4 md:px-8 transition-colors duration-300">
+                <Link to="/" className="flex items-center gap-2 md:gap-3">
                     <img
                         src={`${logo}?v=${new Date().getTime()}`}
                         alt="Caiman Cash"
-                        className="h-24 md:h-32 w-auto object-contain transition-all duration-300 dark-invert"
+                        className="h-6 md:h-8 w-auto object-contain transition-all duration-300 dark-invert"
                     />
-                    <span className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-text-main to-primary tracking-tighter leading-none pb-1">Caiman Cash</span>
+                    <span className="text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-text-main to-primary tracking-tighter leading-none pb-0.5">Caiman Cash</span>
                 </Link>
 
                 <div className="relative">
                     <button
                         onClick={toggleMenu}
-                        className={`p-3 rounded-xl transition-all duration-300 ${isMenuOpen ? 'bg-primary/10 text-primary' : 'hover:bg-secondary text-text-main'}`}
+                        className={`p-2 rounded-lg transition-all duration-300 ${isMenuOpen ? 'bg-primary/10 text-primary' : 'hover:bg-secondary text-text-main'}`}
                     >
-                        <Menu className="w-8 h-8 md:w-10 md:h-10" />
+                        <Menu className="w-5 h-5 md:w-6 md:h-6" />
                     </button>
 
                     <AnimatePresence>
@@ -49,7 +49,7 @@ const Header = () => {
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.9, y: 10 }}
                                     transition={{ duration: 0.2 }}
-                                    className="absolute right-0 top-full mt-2 w-72 bg-background rounded-2xl shadow-2xl border border-border overflow-hidden z-50 py-2 origin-top-right"
+                                    className="absolute right-0 top-full mt-2 w-64 bg-background rounded-2xl shadow-2xl border border-border overflow-hidden z-50 py-2 origin-top-right"
                                 >
                                     <ul className="flex flex-col">
                                         {menuItems.map((item, index) => (
@@ -58,9 +58,9 @@ const Header = () => {
                                                     <Link
                                                         to={item.path}
                                                         onClick={() => setIsMenuOpen(false)}
-                                                        className="flex items-center gap-4 px-6 py-3.5 text-text-main hover:bg-secondary transition-colors text-base font-medium"
+                                                        className="flex items-center gap-3 px-4 py-2.5 text-text-main hover:bg-secondary transition-colors text-sm font-medium"
                                                     >
-                                                        <item.icon className="w-5 h-5 text-text-main/70" />
+                                                        <item.icon className="w-4 h-4 text-text-main/60" />
                                                         {item.label}
                                                     </Link>
                                                 ) : (
@@ -69,13 +69,13 @@ const Header = () => {
                                                             item.action && item.action();
                                                             setIsMenuOpen(false);
                                                         }}
-                                                        className="flex items-center gap-4 px-6 py-3.5 text-text-main hover:bg-secondary transition-colors w-full text-left text-base font-medium"
+                                                        className="flex items-center gap-3 px-4 py-2.5 text-text-main hover:bg-secondary transition-colors w-full text-left text-sm font-medium"
                                                     >
-                                                        <item.icon className="w-5 h-5 text-text-main/70" />
+                                                        <item.icon className="w-4 h-4 text-text-main/60" />
                                                         {item.label}
                                                     </button>
                                                 )}
-                                                {index === 1 && <div className="h-px bg-border my-2 mx-4" />}
+                                                {index < menuItems.length - 1 && <div className="h-px bg-border my-1 mx-3" />}
                                             </li>
                                         ))}
                                     </ul>
