@@ -30,7 +30,7 @@ const Home = () => {
         <div className="min-h-screen">
             <section className="relative overflow-hidden border-b border-caiman-navy-500/40">
                 <div className="absolute inset-0 md:hidden">
-                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover brightness-110" />
+                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover brightness-100" />
                     <div className="absolute inset-0 bg-gradient-to-t from-caiman-navy-900/60 via-transparent to-caiman-navy-900/30" />
                 </div>
                 <div className="absolute inset-0 hidden md:block">
