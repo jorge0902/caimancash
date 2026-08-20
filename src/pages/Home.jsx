@@ -30,9 +30,9 @@ const Home = () => {
             {/* Hero */}
             <section className="relative overflow-hidden border-b border-caiman-navy-500/40">
                 <div className="absolute inset-0">
-                    <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover opacity-40" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-caiman-navy-900/70 via-caiman-navy-900/50 to-caiman-navy-900/20" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-caiman-navy-900/60 via-transparent to-caiman-navy-900/40" />
+                    <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover brightness-110" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-caiman-navy-900/60 via-caiman-navy-900/40 to-caiman-navy-900/10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-caiman-navy-900/50 via-transparent to-caiman-navy-900/30" />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
                     <motion.div
