@@ -9,7 +9,7 @@ import { getPaymentMethods } from '../config/exchangeRates';
 const CopyBtn = ({ text }) => (
     <button
         onClick={() => navigator.clipboard.writeText(text)}
-        className="p-1.5 hover:bg-caiman-navy-700/50 rounded-lg transition-colors text-caiman-slate-200"
+        className="p-1.5 hover:bg-secondary/50 rounded-lg transition-colors text-text-main/60"
         title="Copiar"
     >
         <Copy className="w-4 h-4" />
@@ -107,13 +107,15 @@ const Recharge = () => {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-2xl">
-            <h1 className="text-2xl font-bold text-caiman-slate-50 mb-6 text-center">Recargar Saldo</h1>
+            <h1 className="text-2xl font-bold text-text-main mb-6 text-center">Recargar Saldo</h1>
 
-            <div className="text-center mb-4 text-sm text-caiman-slate-300">
+            {/* Moneda activa */}
+            <div className="text-center mb-4 text-sm text-text-main/60">
                 <span className="font-semibold">{currencyParam === 'RUB' ? 'RUB (₽)' : 'AED (د.إ)'}</span>
             </div>
 
-            <div className="flex overflow-x-auto gap-2 mb-8 bg-caiman-navy-800/70 p-1.5 rounded-xl border border-caiman-navy-500/40 no-scrollbar">
+            {/* Tabs */}
+            <div className="flex overflow-x-auto gap-2 mb-8 bg-secondary p-1.5 rounded-xl no-scrollbar">
                 {paymentMethods.map((tab) => (
                     <button
                         key={tab}
@@ -121,8 +123,8 @@ const Recharge = () => {
                         className={clsx(
                             "flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap",
                             activeTab === tab
-                                ? "bg-caiman-navy-800/80 text-caiman-slate-50 border border-caiman-navy-500/50"
-                                : "text-caiman-slate-300 hover:text-caiman-slate-50 hover:bg-caiman-navy-800/60"
+                                ? "bg-background text-text-main shadow-sm"
+                                : "text-text-main/50 hover:text-text-main hover:bg-background/50"
                         )}
                     >
                         {tab}
@@ -134,27 +136,27 @@ const Recharge = () => {
                 key={activeTab}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-caiman-navy-800/70 border border-caiman-navy-500/50 rounded-2xl p-6 space-y-8 backdrop-blur-sm"
+                className="bg-secondary rounded-2xl shadow-sm border border-border p-6 space-y-8 transition-colors duration-300"
             >
                 {/* Transfer Block */}
                 <div className="space-y-4">
-                    <p className="text-sm text-caiman-slate-300 font-medium">Realiza la transferencia a:</p>
+                    <p className="text-sm text-text-main/70 font-medium">Realiza la transferencia a:</p>
 
                     {['T-Bank', 'SberBank', 'AlfaBank', 'BT-Bank'].includes(activeTab) ||
                      ['Aani', 'duPay', 'IBAN'].includes(activeTab) ? (
                         tabInfo.number.includes('CONSTRUCCIÓN') || tabInfo.number.startsWith('EN ') ? (
-                            <div className="bg-caiman-navy-900/60 border border-caiman-mint/20 rounded-xl p-4 text-center text-caiman-mint font-medium">
+                            <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 text-center text-orange-600 font-medium">
                                 Detalles del método {activeTab} - En construcción
                             </div>
                         ) : (
-                            <div className="flex items-center justify-between bg-caiman-navy-900/70 border border-caiman-mint/20 rounded-xl p-4">
+                            <div className="flex items-center justify-between bg-primary/5 border border-primary/20 rounded-xl p-4">
                                 <div>
-                                    <p className="text-xs text-caiman-mint font-semibold uppercase tracking-wider mb-1">{tabInfo.numberLabel}</p>
-                                    <p className="text-xl font-bold text-caiman-slate-50 tracking-wide">{tabInfo.number}</p>
+                                    <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-1">{tabInfo.numberLabel}</p>
+                                    <p className="text-xl font-bold text-text-main tracking-wide">{tabInfo.number}</p>
                                 </div>
                                 <button
                                     onClick={() => navigator.clipboard.writeText(tabInfo.number)}
-                                    className="p-2 hover:bg-caiman-navy-800/80 rounded-lg transition-colors text-caiman-mint"
+                                    className="p-2 hover:bg-background rounded-lg transition-colors text-primary"
                                     title="Copiar al portapapeles"
                                 >
                                     <Copy className="w-5 h-5" />
@@ -162,7 +164,7 @@ const Recharge = () => {
                             </div>
                         )
                     ) : (
-                        <div className="bg-caiman-navy-900/60 border border-caiman-mint/20 rounded-xl p-4 text-center text-caiman-mint font-medium">
+                        <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 text-center text-orange-600 font-medium">
                             Detalles del método {activeTab} - En construcción
                         </div>
                     )}

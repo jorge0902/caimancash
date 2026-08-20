@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-08-20T21:28:23.815071",
+  "paths": [
+    "src/components/Header.jsx",
+    "src/components/BalanceCard.jsx",
+    "src/components/RemittanceWidget.jsx",
+    "src/pages/Home.jsx",
+    "src/layout/Layout.jsx",
+    "src/components/Footer.jsx",
+    "src/pages/Recharge.jsx",
+    "src/pages/Profile.jsx",
+    "src/index.css",
+    "tailwind.config.js",
+    "index.html"
+  ],
+  "branch": "main"
+}
