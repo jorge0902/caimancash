@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, User, History, RefreshCw, Moon, LogOut } from 'lucide-react';
+import { Menu, X, User, History, RefreshCw, Moon, LogOut, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
@@ -14,6 +14,7 @@ const Header = () => {
 
     const menuItems = [
         { icon: User, label: 'Perfil', path: '/profile' },
+        { icon: Activity, label: 'Tu actividad', path: '/activity' },
         { icon: History, label: 'Historial de órdenes', path: '/history' },
         { icon: RefreshCw, label: 'Recargar la página', action: () => window.location.reload() },
         { icon: Moon, label: 'Cambiar tema', action: () => toggleTheme() },

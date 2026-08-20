@@ -4,6 +4,7 @@ import Layout from './layout/Layout';
 import Home from './pages/Home';
 import Recharge from './pages/Recharge';
 import Profile from './pages/Profile';
+import Activity from './pages/Activity';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="recharge" element={<Recharge />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="activity" element={<Activity />} />
         {/* Tracking route removed temporarily */}
         {/* Placeholder for history if needed, otherwise it will be blank */}
         <Route path="history" element={<div className="p-8 text-center text-gray-500">Historial de órdenes (Próximamente)</div>} />
