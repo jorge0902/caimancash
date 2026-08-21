@@ -46,7 +46,7 @@ const Tracking = () => {
         timerRef.current = setInterval(() => {
             tickRef.current += 1;
             advance();
-        }, 30000);
+        }, 15000);
 
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
@@ -134,11 +134,15 @@ const Tracking = () => {
                                 <div key={step.key} className={`grid grid-cols-[36px_1fr] gap-3 min-h-[72px] ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}`}>
                                     <div className="relative flex justify-center">
                                         <div className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs z-10" style={{
-                                            background: isCompleted || isActive ? 'var(--mint)' : '#132b36',
-                                            borderColor: isCompleted || isActive ? 'var(--mint)' : '#31505c',
-                                            color: isCompleted || isActive ? '#06131b' : 'inherit',
+                                            background: isCompleted || isActive ? '#59D6B5' : '#132b36',
+                                            borderColor: isCompleted || isActive ? '#59D6B5' : '#31505c',
+                                            color: isCompleted || isActive ? '#041016' : 'inherit',
                                             fontWeight: 900,
-                                            boxShadow: isActive ? '0 0 0 7px rgba(89,214,181,.08)' : 'none'
+                                            boxShadow: isCompleted
+                                                ? '0 0 18px 4px rgba(89,214,181,.85)'
+                                                : isActive
+                                                    ? '0 0 18px 6px rgba(89,214,181,.55)'
+                                                    : 'none'
                                         }}>
                                             {isCompleted ? '✓' : isActive ? '→' : step.key === 'delivered' ? '5' : idx + 1}
                                         </div>
