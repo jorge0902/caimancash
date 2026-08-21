@@ -42,8 +42,7 @@ const RemittanceWidget = ({ sourceCurrency = 'AED' }) => {
     };
 
     const receiveAmount = (sendAmount * exchangeRate).toFixed(2);
-    const fee = (sendAmount * 0.015).toFixed(2);
-    const totalPayable = (sendAmount + parseFloat(fee)).toFixed(2);
+    const totalPayable = sendAmount;
 
     const currencySymbols = {
         AED: 'د.إ',
@@ -132,17 +131,6 @@ const RemittanceWidget = ({ sourceCurrency = 'AED' }) => {
                     >
                         <RefreshCw className="w-4 h-4" />
                     </button>
-                </div>
-
-                <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex justify-between">
-                        <span className="text-caiman-slate-300">Comisión</span>
-                        <span className="font-semibold text-caiman-slate-100">{symbol} {fee}</span>
-                    </div>
-                    <div className="flex justify-between border-t border-caiman-navy-500/50 pt-2">
-                        <span className="font-bold text-caiman-slate-50">TOTAL</span>
-                        <span className="font-bold text-caiman-mint text-lg">{symbol} {totalPayable}</span>
-                    </div>
                 </div>
 
                 <button
