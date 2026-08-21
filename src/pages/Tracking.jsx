@@ -46,7 +46,7 @@ const Tracking = () => {
         timerRef.current = setInterval(() => {
             tickRef.current += 1;
             advance();
-        }, 15000);
+        }, 5000);
 
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
