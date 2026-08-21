@@ -12,10 +12,21 @@ const RemittanceWidget = ({ sourceCurrency = 'AED' }) => {
     const [sendAmount, setSendAmount] = useState(100);
     const [exchangeRate, setExchangeRate] = useState(getExchangeRate(sourceCurrency));
     const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+    const [balance, setBalance] = useState(() => {
+        try {
+            const raw = localStorage.getItem('caiman_demo_v1');
+            if (raw) return JSON.parse(raw).balance;
+        } catch (e) {}
+        return 0;
+    });
 
     useEffect(() => {
         const rate = getExchangeRate(sourceCurrency);
         setExchangeRate(rate);
+        try {
+            const raw = localStorage.getItem('caiman_demo_v1');
+            if (raw) setBalance(JSON.parse(raw).balance);
+        } catch (e) {}
     }, [sourceCurrency]);
 
     const getCurrencyOptions = () => {
