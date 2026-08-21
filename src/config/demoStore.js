@@ -1,37 +1,48 @@
+const STORAGE_KEY = 'caiman_demo_v1';
+
 const DEFAULT_DEMO = {
   balance: 50000,
   currency: 'RUB',
   label: 'Cuenta Demo',
   rate: 10.3,
   methods: [
-    { id: 'm1', type: 'Tarjeta bancaria', number: '•••• 4582', name: 'María Rodríguez' }
+    { id: 'm1', type: 'Tarjeta bancaria', number: '•••• 4582', name: 'María Rodríguez', phone: '+53 5 123 4567' }
   ],
   remittances: [],
   nextId: 1
 };
 
-export const getDemo = () => {
+const getDemo = () => {
   try {
-    const raw = localStorage.getItem('caiman_demo');
-    return raw ? JSON.parse(raw) : DEFAULT_DEMO;
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return { ...DEFAULT_DEMO, ...parsed };
+    }
   } catch (e) {
-    return DEFAULT_DEMO;
+    console.error('Error reading demo store', e);
+  }
+  return { ...DEFAULT_DEMO };
+};
+
+const saveDemo = (data) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error('Error saving demo store', e);
   }
 };
 
-export const saveDemo = (data) => {
-  localStorage.setItem('caiman_demo', JSON.stringify(data));
-};
-
-export const resetDemo = () => {
-  localStorage.setItem('caiman_demo', JSON.stringify(DEFAULT_DEMO));
-};
-
-export const createRemittance = (data) => {
+const createRemittance = (data) => {
   const demo = getDemo();
-  const id = demo.nextId;
-  const ref = 'CC-' + Math.random().toString(16).slice(2, 8).toUpperCase();
-  const remittance = {
+  if (data.amount > demo.balance) {
+    throw new Error('Saldo insuficiente');
+  }
+  const id = `rem_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+  const ref = 'CC-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+  const now = new Date().toISOString();
+  
+  const remit = {
     id,
     ref,
     amount: data.amount,
@@ -41,25 +52,58 @@ export const createRemittance = (data) => {
     rate: demo.rate,
     recipient: data.recipient,
     phone: data.phone,
-    method: data.method,
-    methodId: data.methodId,
+    method: data.method || demo.methods[0]?.type || 'Tarjeta bancaria',
+    methodNumber: data.methodNumber || demo.methods[0]?.number || '',
     status: 'created',
     statusLabel: 'Remesa creada',
-    createdAt: new Date().toISOString(),
     timeline: [
-      { status: 'created', label: 'Remesa creada', description: 'Recibimos correctamente tu solicitud.', date: new Date().toLocaleString('es-ES') }
-    ]
+      { status: 'created', label: 'Remesa creada', description: 'Recibimos correctamente tu solicitud.', date: new Date(now).toLocaleString('es-ES') }
+    ],
+    createdAt: now
   };
+  
   demo.balance -= data.amount;
-  demo.remittances.unshift(remittance);
-  demo.nextId = id + 1;
+  demo.remittances.push(remit);
   saveDemo(demo);
-  return remittance;
+  
+  return remit;
 };
 
-export const addMethod = (method) => {
+const updateRemittanceStatus = (ref, status, label, description) => {
   const demo = getDemo();
-  demo.methods.push({ ...method, id: 'm' + Date.now() });
+  const remit = demo.remittances.find(r => r.ref === ref);
+  if (!remit) return null;
+  
+  remit.status = status;
+  remit.statusLabel = label;
+  remit.timeline.push({
+    status,
+    label,
+    description,
+    date: new Date().toLocaleString('es-ES')
+  });
   saveDemo(demo);
-  return demo.methods;
+  return remit;
 };
+
+const addMethod = (method) => {
+  const demo = getDemo();
+  const newMethod = {
+    id: `m_${Date.now()}`,
+    type: method.type,
+    number: method.number || '',
+    name: method.name,
+    phone: method.phone || ''
+  };
+  demo.methods.push(newMethod);
+  saveDemo(demo);
+  return newMethod;
+};
+
+const resetDemo = () => {
+  const fresh = JSON.parse(JSON.stringify(DEFAULT_DEMO));
+  saveDemo(fresh);
+  return fresh;
+};
+
+export { getDemo, saveDemo, createRemittance, updateRemittanceStatus, addMethod, resetDemo, DEFAULT_DEMO };
