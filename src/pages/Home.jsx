@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import BalanceCard from '../components/BalanceCard';
 import AccountSummary from '../components/AccountSummary';
@@ -6,6 +6,7 @@ import RemittanceWidget from '../components/RemittanceWidget';
 import HowItWorks from '../components/HowItWorks';
 import TrustSection from '../components/TrustSection';
 import RecentActivity from '../components/RecentActivity';
+import SendRemittanceInline from '../components/SendRemittanceInline';
 import { motion } from 'framer-motion';
 import { getSourceCurrencyInfo, DEFAULT_SOURCE_CURRENCY } from '../config/exchangeRates';
 import banner from '../assets/cubalink-banner.png';
@@ -50,7 +51,7 @@ const Home = () => {
                         <h2 className="text-3xl md:text-4xl font-semibold text-caiman-slate-200 mb-4">Rápido y <span className="text-caiman-mint">seguro</span>.</h2>
                         <p className="text-caiman-slate-200 text-base md:text-lg mb-8">A solo 2 clics de distancia.</p>
                         <div className="flex flex-wrap gap-3">
-                            <a href="#dashboard" className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 font-semibold px-5 py-3 rounded-xl transition-all shadow-lg shadow-caiman-mint/20">Enviar remesa →</a>
+                            <a href="#send-demo" className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 font-semibold px-5 py-3 rounded-xl transition-all shadow-lg shadow-caiman-mint/20">Enviar remesa →</a>
                             <Link to="/recharge" className="border border-caiman-mint/25 text-caiman-mint hover:bg-caiman-mint/10 font-medium px-5 py-3 rounded-xl transition-colors">Añadir saldo</Link>
                         </div>
                     </motion.div>
@@ -60,6 +61,10 @@ const Home = () => {
             <div id="dashboard" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-8">
                 <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                     <BalanceCard currency={sourceCurrency} balance={balance} />
+                </motion.section>
+
+                <motion.section id="send-demo" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="max-w-3xl">
+                    <SendRemittanceInline />
                 </motion.section>
 
                 <div className="grid grid-cols-1 lg:grid-cols-[minmax(320px,0.85fr)_minmax(500px,1.25fr)] gap-6 items-start">
