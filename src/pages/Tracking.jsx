@@ -1,11 +1,57 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDemo } from '../config/demoStore';
+import { getDemo, updateRemittanceStatus } from '../config/demoStore';
+
+const STATUS_FLOW = [
+  { key: 'created', label: 'Remesa creada', description: 'Recibimos correctamente tu solicitud.' },
+  { key: 'review', label: 'En revisión', description: 'Nuestro equipo verificó los datos y el pago.' },
+  { key: 'approved', label: 'Remesa aprobada', description: 'La operación fue aprobada correctamente.' },
+  { key: 'onroute', label: 'En camino', description: 'El dinero está siendo enviado al destinatario.' },
+  { key: 'delivered', label: 'Recibida', description: 'El destinatario recibirá la remesa.' }
+];
+
+const NEXT_STATUS = {
+  created: 'review',
+  review: 'approved',
+  approved: 'onroute',
+  onroute: 'delivered'
+};
 
 const Tracking = () => {
     const { ref } = useParams();
-    const demo = getDemo();
-    const remit = demo.remittances.find(r => r.ref === ref) || null;
+    const [remit, setRemit] = useState(() => getDemo().remittances.find(r => r.ref === ref) || null);
+    const timerRef = useRef(null);
+    const tickRef = useRef(0);
+
+    useEffect(() => {
+        const current = getDemo().remittances.find(r => r.ref === ref);
+        if (current) setRemit(current);
+    }, [ref]);
+
+    useEffect(() => {
+        if (!remit || !NEXT_STATUS[remit.status]) return;
+
+        const advance = () => {
+            const next = NEXT_STATUS[remit.status];
+            if (!next) return;
+            const updated = updateRemittanceStatus(
+                remit.ref,
+                next,
+                STATUS_FLOW.find(s => s.key === next)?.label || next,
+                STATUS_FLOW.find(s => s.key === next)?.description || ''
+            );
+            if (updated) setRemit(updated);
+        };
+
+        timerRef.current = setInterval(() => {
+            tickRef.current += 1;
+            advance();
+        }, 30000);
+
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, [remit && remit.ref, remit && remit.status]);
 
     if (!remit) {
         return (
