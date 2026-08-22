@@ -25,11 +25,13 @@ const Header = () => {
         <>
             <header className="fixed top-0 left-0 right-0 bg-caiman-navy-900/80 backdrop-blur-xl border-b border-caiman-navy-500/40 z-40 h-16 md:h-20 flex items-center justify-between px-4 md:px-8 transition-colors duration-300">
                 <Link to="/" className="flex items-center gap-3">
-                    <img
-                        src={`${logo}?v=${new Date().getTime()}`}
-                        alt="Caiman Cash"
-                        className="h-8 md:h-10 w-auto object-contain transition-all duration-300 dark-invert drop-shadow-[0_0_12px_rgba(89,214,181,0.35)]"
-                    />
+                    <div className="rounded-full bg-white/90 p-1 shadow-sm">
+                        <img
+                            src={`${logo}?v=${new Date().getTime()}`}
+                            alt="Caiman Cash"
+                            className="h-10 md:h-12 w-auto object-contain transition-all duration-300 dark-invert drop-shadow-[0_0_12px_rgba(89,214,181,0.35)]"
+                        />
+                    </div>
                     <span className="text-lg md:text-xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</span>
                 </Link>
 
