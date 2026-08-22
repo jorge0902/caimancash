@@ -30,7 +30,7 @@ const Home = () => {
         <div className="min-h-screen">
             <section className="relative overflow-hidden border-b border-caiman-navy-500/40">
                 <div className="absolute inset-0 md:hidden">
-                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-contain" />
+                    <img src={banner} alt="Caiman Cash mobile" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute inset-0 hidden md:block">
                     <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
