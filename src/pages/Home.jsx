@@ -30,13 +30,10 @@ const Home = () => {
         <div className="min-h-screen">
             <section className="relative overflow-hidden border-b border-caiman-navy-500/40">
                 <div className="absolute inset-0 md:hidden">
-                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover brightness-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-caiman-navy-900/60 via-transparent to-caiman-navy-900/30" />
+                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute inset-0 hidden md:block">
-                    <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover brightness-110" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-caiman-navy-900/60 via-caiman-navy-900/40 to-caiman-navy-900/10" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-caiman-navy-900/50 via-transparent to-caiman-navy-900/30" />
+                    <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
                 </div>
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
                     <motion.div
