@@ -25,7 +25,7 @@ const Header = () => {
         <>
             <header className="fixed top-0 left-0 right-0 bg-caiman-navy-900/80 backdrop-blur-xl border-b border-caiman-navy-500/40 z-40 h-16 md:h-20 flex items-center justify-between px-4 md:px-8 transition-colors duration-300">
                 <Link to="/" className="flex items-center gap-3">
-                    <div className="rounded-full bg-white/90 p-1 shadow-sm">
+                    <div className="rounded-full bg-white/90 p-[3px] shadow-sm">
                         <img
                             src={`${logo}?v=${new Date().getTime()}`}
                             alt="Caiman Cash"
@@ -34,7 +34,7 @@ const Header = () => {
                     </div>
                     <div className="leading-tight">
                         <span className="text-lg md:text-xl font-bold text-caiman-slate-50 tracking-tight block">Caiman Cash</span>
-                        <span className="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-caiman-mint/90 block">Remesas a Cuba</span>
+                        <span className="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-caiman-mint/90 block">Remesas</span>
                     </div>
                 </Link>
 
