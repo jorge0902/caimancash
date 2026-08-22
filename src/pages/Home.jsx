@@ -36,15 +36,15 @@ const Home = () => {
                 <div className="absolute inset-0 hidden md:block">
                     <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
                 </div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-16">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="max-w-2xl hidden md:block -mt-4 ml-20"
+                        className="max-w-2xl hidden md:block -mt-14 ml-20"
                     >
-                        <div className="flex items-center gap-4 mb-6">
-                            <img src={logo} alt="Caiman Cash" className="h-12 w-auto object-contain dark-invert" />
+                        <div className="flex items-center gap-4 mb-24">
+                            <img src={logo} alt="Caiman Cash" className="h-20 w-auto object-contain" />
                             <div className="leading-tight">
                                 <div className="text-2xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</div>
                                 <div className="text-xs font-semibold uppercase tracking-widest text-caiman-mint/90">Remesas</div>
