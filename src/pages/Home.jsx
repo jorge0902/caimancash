@@ -42,7 +42,13 @@ const Home = () => {
                         transition={{ duration: 0.5 }}
                         className="max-w-2xl hidden md:block"
                     >
-                        <p className="text-xs font-semibold uppercase tracking-wider text-caiman-mint mb-4">Caiman Cash</p>
+                        <div className="flex items-center gap-4 mb-6">
+                            <img src={logo} alt="Caiman Cash" className="h-12 w-auto object-contain dark-invert" />
+                            <div className="leading-tight">
+                                <div className="text-2xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</div>
+                                <div className="text-xs font-semibold uppercase tracking-widest text-caiman-mint/90">Remesas a Cuba</div>
+                            </div>
+                        </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-caiman-slate-50 leading-tight mb-4">Envía dinero a Cuba.</h1>
                         <h2 className="text-3xl md:text-4xl font-semibold text-caiman-slate-200 mb-4">Rápido y <span className="text-caiman-mint">seguro</span>.</h2>
                         <p className="text-caiman-slate-200 text-base md:text-lg mb-8">A solo 2 clics de distancia.</p>
