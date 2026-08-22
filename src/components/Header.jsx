@@ -32,7 +32,10 @@ const Header = () => {
                             className="h-8 md:h-10 w-auto object-contain transition-all duration-300 dark-invert drop-shadow-[0_0_12px_rgba(89,214,181,0.35)] scale-[1.2] md:scale-100"
                         />
                     </div>
-                    <span className="text-lg md:text-xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</span>
+                    <div className="leading-tight">
+                        <span className="text-lg md:text-xl font-bold text-caiman-slate-50 tracking-tight block">Caiman Cash</span>
+                        <span className="text-[11px] md:text-xs font-semibold uppercase tracking-widest text-caiman-mint/90 block">Remesas a Cuba</span>
+                    </div>
                 </Link>
 
                 <div className="relative">
