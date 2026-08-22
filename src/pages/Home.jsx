@@ -44,7 +44,7 @@ const Home = () => {
                         className="max-w-2xl hidden md:block -mt-14 ml-20"
                     >
                         <div className="flex items-center gap-4 mb-24">
-                            <img src={logo} alt="Caiman Cash" className="h-20 w-auto object-contain" />
+                            <img src={logo} alt="Caiman Cash" className="h-24 w-auto object-contain" />
                             <div className="leading-tight">
                                 <div className="text-2xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</div>
                                 <div className="text-xs font-semibold uppercase tracking-widest text-caiman-mint/90">Remesas</div>
