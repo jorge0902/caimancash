@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { getSourceCurrencyInfo, DEFAULT_SOURCE_CURRENCY } from '../config/exchangeRates';
 import banner from '../assets/cubalink-banner.png';
 import bannerMobile from '../assets/cubalink-banner-mobile.png';
+import logo from '../assets/logo.png';
 
 const Home = () => {
     const location = useLocation();
