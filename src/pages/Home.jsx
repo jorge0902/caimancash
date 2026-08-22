@@ -40,7 +40,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="max-w-2xl"
+                        className="max-w-2xl hidden md:block"
                     >
                         <p className="text-xs font-semibold uppercase tracking-wider text-caiman-mint mb-4">Caiman Cash</p>
                         <h1 className="text-4xl md:text-5xl font-bold text-caiman-slate-50 leading-tight mb-4">Envía dinero a Cuba.</h1>
