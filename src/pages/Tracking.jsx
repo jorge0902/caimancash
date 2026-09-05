@@ -96,13 +96,6 @@ const Tracking = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="w-full max-w-[520px] mx-auto">
-                <header className="flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-caiman-mint flex items-center justify-center text-caiman-navy-900 font-black text-lg">C</div>
-                        <div className="font-extrabold text-caiman-slate-50">Caiman Cash</div>
-                    </div>
-                </header>
-
                 <section className="rounded-3xl p-5 border border-caiman-navy-500/50" style={{ background: 'linear-gradient(145deg, #0c202b, #091923)', boxShadow: '0 20px 50px rgba(0,0,0,.2)' }}>
                     <div className="text-caiman-slate-400 text-xs uppercase tracking-widest">{typeLabel}</div>
                     <div className="text-3xl font-Black mt-1 text-caiman-slate-50">{order.amount.toLocaleString('es-ES')} {order.currency}</div>
