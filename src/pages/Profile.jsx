@@ -55,7 +55,7 @@ const Profile = () => {
                     <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
                         <select className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 appearance-none text-caiman-slate-50" defaultValue="RU">
-                                                    <option value="RU" className="bg-caiman-navy-900 text-caiman-slate-50">Rusia 🇷🇺</option>
+                                                    <option value="RU" className="bg-caiman-navy-900 text-caiman-slate-50">🇷🇺 Rusia</option>
                                                 </select>
                     </div>
                 </div>
