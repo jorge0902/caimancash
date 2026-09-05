@@ -36,7 +36,7 @@ const Home = () => {
                             <div className="absolute inset-0 hidden md:block">
                                 <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
                             </div>
-                            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:h-full">
+                            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:h-full">
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
