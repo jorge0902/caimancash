@@ -1,30 +1,102 @@
-import React, { useState } from 'react';
-import { Copy, Upload, CheckCircle } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Copy, Check, Upload, CheckCircle, AlertCircle } from 'lucide-react';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getPaymentMethods } from '../config/exchangeRates';
+import { createRecharge } from '../config/demoStore';
 
 
-const CopyBtn = ({ text }) => (
-    <button
-        onClick={() => navigator.clipboard.writeText(text)}
-        className="p-1.5 hover:bg-caiman-navy-700/50 rounded-lg transition-colors text-caiman-slate-200"
-        title="Copiar"
-    >
-        <Copy className="w-4 h-4" />
-    </button>
-);
+// Copia con fallback: usa navigator.clipboard si está disponible (contexto seguro),
+// si no, cae a un textarea oculto + execCommand (Safari/iOS/webviews).
+const copyToClipboard = async (text) => {
+    try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+        }
+    } catch (_) {
+        // fallback abajo
+    }
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    } catch (_) {
+        return false;
+    }
+};
+
+const CopyBtn = ({ text }) => {
+    const [copied, setCopied] = useState(false);
+    const timer = useRef(null);
+    const handleCopy = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        copyToClipboard(text);
+        setCopied(true);
+        clearTimeout(timer.current);
+        timer.current = setTimeout(() => setCopied(false), 1800);
+    };
+    return (
+        <button
+            onClick={handleCopy}
+            className="p-1.5 hover:bg-caiman-navy-700/50 rounded-lg transition-colors text-caiman-slate-200"
+            title="Copiar"
+            type="button"
+        >
+            {copied ? <Check className="w-4 h-4 text-caiman-mint" /> : <Copy className="w-4 h-4" />}
+        </button>
+    );
+};
 
 const Recharge = () => {
     const location = useLocation();
-    const urlParams = new URLSearchParams(location.search);
+        const navigate = useNavigate();
+        const urlParams = new URLSearchParams(location.search);
     const currencyParam = urlParams.get('currency')?.toUpperCase() || 'RUB';
     const paymentMethods = getPaymentMethods(currencyParam);
-    
+
     const [activeTab, setActiveTab] = useState(paymentMethods[0] || 'T-Bank');
     const [dragActive, setDragActive] = useState(false);
     const [file, setFile] = useState(null);
+    const [copiedNum, setCopiedNum] = useState(false);
+    const copyTimer = useRef(null);
+    const [missingFile, setMissingFile] = useState(false);
+
+    const handleCopyNumber = (e) => {
+        e.preventDefault();
+        copyToClipboard(tabInfo.number);
+        setCopiedNum(true);
+        clearTimeout(copyTimer.current);
+        copyTimer.current = setTimeout(() => setCopiedNum(false), 1800);
+    };
+
+    const handleSubmit = (e) => {
+            e.preventDefault();
+            if (!file) {
+                setMissingFile(true);
+                return;
+            }
+            setMissingFile(false);
+            const recharge = createRecharge({
+                amount: 0,
+                currency: currencyParam === 'RUB' ? 'RUB' : 'AED',
+                method: activeTab
+            });
+            navigate(`/tracking/${recharge.ref}`);
+        };
+
+    const handleFileSelect = () => {
+        setMissingFile(false);
+    };
 
     const handleDrag = (e) => {
         e.preventDefault();
@@ -42,6 +114,7 @@ const Recharge = () => {
         setDragActive(false);
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             setFile(e.dataTransfer.files[0]);
+            setMissingFile(false);
         }
     };
 
@@ -49,6 +122,7 @@ const Recharge = () => {
         e.preventDefault();
         if (e.target.files && e.target.files[0]) {
             setFile(e.target.files[0]);
+            setMissingFile(false);
         }
     };
 
@@ -57,45 +131,45 @@ const Recharge = () => {
         // Métodos rusos con números reales
         const rubInfo = {
             'T-Bank': {
-                numberLabel: 'Номер T-Bank',
+                numberLabel: 'T-Bank',
                 number: '+7 965 079-97-97',
                 masked: '+7 *** 97-97'
             },
             'SberBank': {
-                numberLabel: 'Номер SberBank',
+                numberLabel: 'SberBank',
                 number: '+7 917 587-22-59',
                 masked: '+7 *** 22-59'
             },
             'AlfaBank': {
-                numberLabel: 'Номер AlfaBank',
+                numberLabel: 'AlfaBank',
                 number: 'EN CONSTRUCCIÓN - Disponible próximamente',
                 masked: '---'
             },
             'BT-Bank': {
-                numberLabel: 'Номер BT-Bank',
+                numberLabel: 'BT-Bank',
                 number: 'EN CONSTRUCCIÓN - Disponible próximamente',
                 masked: '---'
             }
         };
-        
+
         if (currencyParam === 'RUB') {
             return rubInfo[activeTab] || rubInfo['T-Bank'];
         }
-        
+
         // Información para métodos de Dubai (AED)
         const aedInfo = {
             'Aani': {
-                numberLabel: 'Número Aani',
+                numberLabel: 'Aani',
                 number: '+971 55 797 6925',
                 masked: '+971 ****6925'
             },
             'duPay': {
-                numberLabel: 'Número duPay',
+                numberLabel: 'duPay',
                 number: '+971 50 123 4567',
                 masked: '+971 ****4567'
             },
             'IBAN': {
-                numberLabel: 'IBAN (IBAN)',
+                numberLabel: 'IBAN',
                 number: 'EN CONSTRUCCIÓN - Disponible próximamente',
                 masked: '---'
             }
@@ -147,17 +221,28 @@ const Recharge = () => {
                                 Detalles del método {activeTab} - En construcción
                             </div>
                         ) : (
-                            <div className="flex items-center justify-between bg-caiman-navy-900/70 border border-caiman-mint/20 rounded-xl p-4">
+                            <div className="relative flex items-center justify-between bg-caiman-navy-900/70 border border-caiman-mint/20 rounded-xl p-4">
                                 <div>
                                     <p className="text-xs text-caiman-mint font-semibold uppercase tracking-wider mb-1">{tabInfo.numberLabel}</p>
                                     <p className="text-xl font-bold text-caiman-slate-50 tracking-wide">{tabInfo.number}</p>
                                 </div>
                                 <button
-                                    onClick={() => navigator.clipboard.writeText(tabInfo.number)}
-                                    className="p-2 hover:bg-caiman-navy-800/80 rounded-lg transition-colors text-caiman-mint"
+                                    onClick={handleCopyNumber}
+                                    className="relative p-2 hover:bg-caiman-navy-800/80 rounded-lg transition-colors text-caiman-mint"
                                     title="Copiar al portapapeles"
+                                    type="button"
                                 >
-                                    <Copy className="w-5 h-5" />
+                                    {copiedNum ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+                                    {copiedNum && (
+                                        <motion.span
+                                            initial={{ opacity: 0, y: 6, scale: 0.8 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            transition={{ duration: 0.15 }}
+                                            className="absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap bg-caiman-mint text-caiman-navy-900 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg z-10"
+                                        >
+                                            ¡Copiado!
+                                        </motion.span>
+                                    )}
                                 </button>
                             </div>
                         )
@@ -209,7 +294,8 @@ const Recharge = () => {
                         className={clsx(
                             "relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all min-h-[200px]",
                             dragActive ? "border-primary bg-primary/5 scale-[1.02]" : "border-border hover:border-text-main/30 bg-background/50",
-                            file ? "border-primary bg-primary/5" : ""
+                            file ? "border-primary bg-primary/5" : "",
+                            missingFile ? "border-red-500/70" : ""
                         )}
                         onDragEnter={handleDrag}
                         onDragLeave={handleDrag}
@@ -238,8 +324,25 @@ const Recharge = () => {
                     </div>
                 </div>
 
+                {/* Aviso: falta subir el comprobante */}
+                {missingFile && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="flex items-center gap-2 bg-red-500/15 border border-red-500/40 text-red-300 rounded-xl px-4 py-3 text-sm"
+                        role="alert"
+                    >
+                        <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                        <span>Debes subir el comprobante de transferencia antes de solicitar la acreditación.</span>
+                    </motion.div>
+                )}
+
                 {/* Submit Button */}
-                <button className="w-full bg-primary hover:opacity-90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+                <button
+                    onClick={handleSubmit}
+                    className="w-full bg-primary hover:opacity-90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98]"
+                >
                     Solicitar acreditación
                 </button>
             </motion.div>

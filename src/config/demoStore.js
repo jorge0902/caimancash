@@ -9,6 +9,7 @@ const DEFAULT_DEMO = {
     { id: 'm1', type: 'Tarjeta bancaria', number: '•••• 4582', name: 'María Rodríguez', phone: '+53 5 123 4567' }
   ],
   remittances: [],
+  recharges: [],
   nextId: 1
 };
 
@@ -100,10 +101,58 @@ const addMethod = (method) => {
   return newMethod;
 };
 
+const RECHARGE_FLOW = [
+  { key: 'pending', label: 'Comprobante recibido', description: 'Recibimos tu comprobante de pago. Estamos verificando la transferencia.' },
+  { key: 'verifying', label: 'En revisión', description: 'Nuestro equipo está verificando la transferencia recibida.' },
+  { key: 'credited', label: 'Saldo acreditado', description: 'El saldo fue acreditado a tu cuenta.' }
+];
+
+const createRecharge = (data) => {
+  const demo = getDemo();
+  const id = `rec_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+  const ref = 'CC-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+  const now = new Date().toISOString();
+
+  const recharge = {
+    id,
+    ref,
+    amount: data.amount || 0,
+    currency: data.currency || demo.currency,
+    method: data.method || 'T-Bank',
+    status: 'pending',
+    statusLabel: RECHARGE_FLOW[0].label,
+    timeline: [
+      { status: RECHARGE_FLOW[0].key, label: RECHARGE_FLOW[0].label, description: RECHARGE_FLOW[0].description, date: new Date(now).toLocaleString('es-ES') }
+    ],
+    createdAt: now
+  };
+
+  demo.recharges.push(recharge);
+  saveDemo(demo);
+  return recharge;
+};
+
+const updateRechargeStatus = (ref, status, label, description) => {
+  const demo = getDemo();
+  const rec = demo.recharges.find(r => r.ref === ref);
+  if (!rec) return null;
+
+  rec.status = status;
+  rec.statusLabel = label;
+  rec.timeline.push({
+    status,
+    label,
+    description,
+    date: new Date().toLocaleString('es-ES')
+  });
+  saveDemo(demo);
+  return rec;
+};
+
 const resetDemo = () => {
   const fresh = JSON.parse(JSON.stringify(DEFAULT_DEMO));
   saveDemo(fresh);
   return fresh;
 };
 
-export { getDemo, saveDemo, createRemittance, updateRemittanceStatus, addMethod, resetDemo, DEFAULT_DEMO };
+export { getDemo, saveDemo, createRemittance, updateRemittanceStatus, addMethod, createRecharge, updateRechargeStatus, RECHARGE_FLOW, resetDemo, DEFAULT_DEMO };

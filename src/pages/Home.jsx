@@ -29,37 +29,37 @@ const Home = () => {
 
     return (
         <div className="min-h-screen">
-            <section className="relative overflow-hidden border-b border-caiman-navy-500/40">
-                <div className="absolute inset-0 md:hidden">
-                    <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover" />
-                </div>
-                <div className="absolute inset-0 hidden md:block">
-                    <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
-                </div>
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-20">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="max-w-2xl hidden md:block mt-36 ml-20"
-                    >
-                        <div className="flex items-center gap-4 mb-6">
-                            <img src={logo} alt="Caiman Cash" className="h-12 w-auto object-contain dark-invert" />
-                            <div className="leading-tight">
-                                <div className="text-2xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</div>
-                                <div className="text-xs font-semibold uppercase tracking-widest text-caiman-mint/90">Remesas</div>
+            <section className="relative overflow-hidden border-b border-caiman-navy-500/40 md:h-[540px]">
+                            <div className="absolute inset-0 md:hidden">
+                                <img src={bannerMobile} alt="Caiman Cash mobile" className="w-full h-full object-cover" />
                             </div>
-                        </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-caiman-slate-50 leading-tight mb-4">Envía dinero a Cuba.</h1>
-                        <h2 className="text-3xl md:text-4xl font-semibold text-caiman-slate-200 mb-4">Rápido y <span className="text-caiman-mint">seguro</span>.</h2>
-                        <p className="text-caiman-slate-200 text-base md:text-lg mb-8">A solo 2 clics de distancia.</p>
-                        <div className="flex flex-wrap gap-3">
-                            <a href="#dashboard" className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 font-semibold px-5 py-3 rounded-xl transition-all shadow-lg shadow-caiman-mint/20">Enviar remesa →</a>
-                            <Link to="/recharge" className="border border-caiman-mint/25 text-caiman-mint hover:bg-caiman-mint/10 font-medium px-5 py-3 rounded-xl transition-colors">Añadir saldo</Link>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
+                            <div className="absolute inset-0 hidden md:block">
+                                <img src={banner} alt="Caiman Cash" className="w-full h-full object-cover" />
+                            </div>
+                            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:h-full">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="max-w-xl hidden md:flex flex-col justify-center h-full"
+                                >
+                                    <div className="flex items-center gap-4 mb-6">
+                                        <img src={logo} alt="Caiman Cash" className="h-14 w-auto object-contain dark-invert" />
+                                        <div className="leading-tight">
+                                            <div className="text-2xl font-bold text-caiman-slate-50 tracking-tight">Caiman Cash</div>
+                                            <div className="text-xs font-semibold uppercase tracking-widest text-caiman-mint/90">Remesas</div>
+                                        </div>
+                                    </div>
+                                    <h1 className="text-4xl font-bold text-caiman-slate-50 leading-tight mb-2">Envía dinero a Cuba.</h1>
+                                    <h2 className="text-2xl font-semibold text-caiman-slate-200 mb-3">Rápido y <span className="text-caiman-mint">seguro</span>.</h2>
+                                    <p className="text-caiman-slate-200 text-base mb-6">A solo 2 clics de distancia.</p>
+                                    <div className="flex flex-wrap gap-3">
+                                        <a href="#dashboard" className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 font-semibold px-5 py-3 rounded-xl transition-all shadow-lg shadow-caiman-mint/20">Enviar remesa →</a>
+                                        <Link to="/recharge" className="border border-caiman-mint/25 text-caiman-mint hover:bg-caiman-mint/10 font-medium px-5 py-3 rounded-xl transition-colors">Añadir saldo</Link>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </section>
 
             <div id="dashboard" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-8">
                 <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
