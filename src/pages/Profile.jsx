@@ -83,14 +83,14 @@ const Profile = () => {
                     </button>
 
                     <div className="flex items-center gap-3">
-                        <button onClick={() => navigate(-1)} className="px-6 py-2.5 text-caiman-slate-300 font-medium hover:bg-caiman-navy-700/40 rounded-lg transition-colors">
-                            Atrás
-                        </button>
-                        <button onClick={handleSave} className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 px-6 py-2.5 rounded-lg font-bold shadow-md shadow-caiman-mint/20 transition-all flex items-center gap-2">
-                            <Save className="w-5 h-5" />
-                            Guardar cambios
-                        </button>
-                    </div>
+                                            <button onClick={() => navigate(-1)} className="px-4 py-2 text-sm text-caiman-slate-300 font-medium hover:bg-caiman-navy-700/40 rounded-lg transition-colors">
+                                                Atrás
+                                            </button>
+                                            <button onClick={handleSave} className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 px-4 py-2 text-sm rounded-lg font-bold shadow-md shadow-caiman-mint/20 transition-all flex items-center gap-1.5">
+                                                <Save className="w-4 h-4" />
+                                                Guardar cambios
+                                            </button>
+                                        </div>
                 </div>
             </div>
         </div>
