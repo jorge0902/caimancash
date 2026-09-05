@@ -1,73 +1,97 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { User, MapPin, Phone, Lock, Save, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const navigate = useNavigate();
+    const [name, setName] = useState('Usuario');
+    const [lastName, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
+
+    const handleSave = () => {
+        // Demo: conservar los datos no es necesario (mock)
+    };
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-2xl">
             <div className="flex items-center gap-4 mb-8">
-                <button onClick={() => navigate(-1)} className="p-2 hover:bg-secondary rounded-full transition-colors">
-                    <ArrowLeft className="w-5 h-5 text-text-main" />
+                <button onClick={() => navigate(-1)} className="p-2 hover:bg-caiman-navy-700/50 rounded-full transition-colors">
+                    <ArrowLeft className="w-5 h-5 text-caiman-slate-50" />
                 </button>
-                <h1 className="text-2xl font-bold text-text-main">Perfil y Configuración</h1>
+                <h1 className="text-2xl font-bold text-caiman-slate-50">Perfil y Configuración</h1>
             </div>
 
-            <div className="bg-secondary rounded-2xl shadow-sm border border-border p-8 space-y-6 transition-colors duration-300">
+            <div className="bg-caiman-navy-800/70 rounded-2xl border border-caiman-navy-500/50 p-8 space-y-6 backdrop-blur-sm">
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-semibold text-text-main/80">Nombre(s)</label>
+                        <label className="text-sm font-semibold text-caiman-slate-300/80">Nombre(s)</label>
                         <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-main/40" />
-                            <input type="text" className="w-full bg-background border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary text-text-main" placeholder="Tu nombre" defaultValue="Usuario" />
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 text-caiman-slate-50 placeholder-caiman-slate-400/50"
+                                placeholder="Tu nombre"
+                            />
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-semibold text-text-main/80">Apellidos (opcional)</label>
-                        <input type="text" className="w-full bg-background border border-border rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-primary text-text-main" placeholder="Tus apellidos" />
+                        <label className="text-sm font-semibold text-caiman-slate-300/80">Apellidos (opcional)</label>
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 text-caiman-slate-50 placeholder-caiman-slate-400/50"
+                            placeholder="Tus apellidos"
+                        />
                     </div>
                 </div>
 
                 {/* Country */}
                 <div className="space-y-2">
-                    <label className="text-sm font-semibold text-text-main/80">País</label>
+                    <label className="text-sm font-semibold text-caiman-slate-300/80">País</label>
                     <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-main/40" />
-                        <select className="w-full bg-background border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary appearance-none text-text-main">
-                            <option value="AE">Emiratos Árabes Unidos (UAE) 🇦🇪</option>
+                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
+                        <select className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 appearance-none text-caiman-slate-50">
+                            <option value="AE" className="bg-caiman-navy-900 text-caiman-slate-50">Emiratos Árabes Unidos (UAE) 🇦🇪</option>
                         </select>
                     </div>
                 </div>
 
                 {/* Phone */}
                 <div className="space-y-2">
-                    <label className="text-sm font-semibold text-text-main/80">Teléfono recomendado</label>
+                    <label className="text-sm font-semibold text-caiman-slate-300/80">Teléfono recomendado</label>
                     <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-main/40" />
-                        <div className="absolute left-10 top-1/2 -translate-y-1/2 font-medium text-text-main/60 pl-1">+971</div>
-                        <input type="tel" className="w-full bg-background border border-border rounded-lg py-3 pl-20 pr-4 focus:outline-none focus:ring-2 focus:ring-primary text-text-main" placeholder="50 123 4567" />
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
+                        <div className="absolute left-10 top-1/2 -translate-y-1/2 font-medium text-caiman-slate-400/70 pl-1">+7</div>
+                                                <input
+                                                    type="tel"
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-20 pr-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 text-caiman-slate-50 placeholder-caiman-slate-400/50"
+                                                    placeholder="965 123-45-67"
+                                                />
                     </div>
                 </div>
 
-                <div className="border-t border-border pt-6 mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <button className="flex items-center justify-center gap-2 text-text-main/70 hover:text-text-main font-medium px-4 py-2 hover:bg-background rounded-lg transition-colors">
+                <div className="border-t border-caiman-navy-500/40 pt-6 mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <button className="flex items-center justify-center gap-2 text-caiman-slate-300/80 hover:text-caiman-slate-50 font-medium px-4 py-2 hover:bg-caiman-navy-700/40 rounded-lg transition-colors">
                         <Lock className="w-4 h-4" />
                         Cambiar contraseña
                     </button>
 
                     <div className="flex items-center gap-3">
-                        <button onClick={() => navigate(-1)} className="px-6 py-2.5 text-text-main font-medium hover:bg-background rounded-lg transition-colors">
+                        <button onClick={() => navigate(-1)} className="px-6 py-2.5 text-caiman-slate-300 font-medium hover:bg-caiman-navy-700/40 rounded-lg transition-colors">
                             Atrás
                         </button>
-                        <button className="bg-primary hover:opacity-90 text-white px-6 py-2.5 rounded-lg font-bold shadow-md shadow-primary/20 transition-all flex items-center gap-2">
+                        <button onClick={handleSave} className="bg-caiman-mint hover:brightness-110 text-caiman-navy-900 px-6 py-2.5 rounded-lg font-bold shadow-md shadow-caiman-mint/20 transition-all flex items-center gap-2">
                             <Save className="w-5 h-5" />
                             Guardar cambios
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     );
