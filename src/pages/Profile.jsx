@@ -52,12 +52,15 @@ const Profile = () => {
                 {/* Country */}
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-caiman-slate-300/80">País</label>
-                    <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
-                        <select className="w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-caiman-mint/60 appearance-none text-caiman-slate-50" defaultValue="RU">
-                                                    <option value="RU" className="bg-caiman-navy-900 text-caiman-slate-50">🇷🇺 Rusia</option>
-                                                </select>
-                    </div>
+                    <div className="flex items-center w-full bg-caiman-navy-900/60 border border-caiman-navy-500/50 rounded-lg py-3 pl-10 pr-4 text-caiman-slate-50">
+                                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-caiman-slate-400/60" />
+                                            <svg viewBox="0 0 3 2" className="w-6 h-4 mr-2 rounded-[2px] flex-shrink-0" aria-hidden="true">
+                                                <rect width="3" height="2" fill="#fff" />
+                                                <rect y="0.67" width="3" height="0.66" fill="#0039A6" />
+                                                <rect y="1.33" width="3" height="0.67" fill="#D52B1E" />
+                                            </svg>
+                                            <span className="font-medium">Rusia</span>
+                                        </div>
                 </div>
 
                 {/* Phone */}
