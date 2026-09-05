@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Copy, Check, Upload, CheckCircle, AlertCircle } from 'lucide-react';
+import { Copy, Check, Upload, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -211,8 +211,39 @@ const Recharge = () => {
                 className="bg-caiman-navy-800/70 border border-caiman-navy-500/50 rounded-2xl p-6 space-y-8 backdrop-blur-sm"
             >
                 {/* Transfer Block */}
-                <div className="space-y-4">
-                    <p className="text-sm text-caiman-slate-300 font-medium">Realiza la transferencia a:</p>
+                                <div className="space-y-4">
+                                    {/* Caja explicativa: ¿Cómo recargar tu saldo? */}
+                                                                        <div className="w-full bg-caiman-navy-900/50 border border-caiman-mint/20 rounded-xl p-4 space-y-3">
+                                                                            <div className="flex items-center gap-2">
+                                                                                <Info className="w-5 h-5 text-caiman-mint flex-shrink-0" />
+                                                                                <p className="text-sm font-semibold text-caiman-mint">¿Cómo recargar tu saldo?</p>
+                                                                            </div>
+                                                                            <ol className="space-y-2 mt-3">
+                                                                                <li className="flex gap-2.5 items-start">
+                                                                                    <span className="w-[22px] h-[22px] flex-shrink-0 flex items-center justify-center rounded-full bg-caiman-mint/10 border border-caiman-mint/25 text-caiman-mint text-xs font-bold">1</span>
+                                                                                    <div>
+                                                                                        <p className="text-sm font-semibold text-caiman-slate-50">Realiza la transferencia</p>
+                                                                                        <p className="text-xs text-caiman-slate-400 leading-relaxed">Envía el importe al número indicado en pantalla.</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li className="flex gap-2.5 items-start">
+                                                                                    <span className="w-[22px] h-[22px] flex-shrink-0 flex items-center justify-center rounded-full bg-caiman-mint/10 border border-caiman-mint/25 text-caiman-mint text-xs font-bold">2</span>
+                                                                                    <div>
+                                                                                        <p className="text-sm font-semibold text-caiman-slate-50">Guarda el comprobante</p>
+                                                                                        <p className="text-xs text-caiman-slate-400 leading-relaxed">Conserva el recibo generado por tu banco.</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li className="flex gap-2.5 items-start">
+                                                                                    <span className="w-[22px] h-[22px] flex-shrink-0 flex items-center justify-center rounded-full bg-caiman-mint/10 border border-caiman-mint/25 text-caiman-mint text-xs font-bold">3</span>
+                                                                                    <div>
+                                                                                        <p className="text-sm font-semibold text-caiman-slate-50">Solicita la acreditación</p>
+                                                                                        <p className="text-xs text-caiman-slate-400 leading-relaxed">Sube el comprobante y pulsa el botón inferior.</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ol>
+                                                                        </div>
+
+                                    <p className="text-sm text-caiman-slate-300 font-medium">Realiza la transferencia a:</p>
 
                     {['T-Bank', 'SberBank', 'AlfaBank', 'BT-Bank'].includes(activeTab) ||
                      ['Aani', 'duPay', 'IBAN'].includes(activeTab) ? (
